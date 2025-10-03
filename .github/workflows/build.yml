@@ -8,11 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          # Add your build commands here
-          echo "Building the project..."
           mkdir -p build/web
-          touch build/web/index.html
+          echo "<h1>MonkeyClash Game</h1>" > build/web/index.html
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: build/web
+          retention-days: 5
