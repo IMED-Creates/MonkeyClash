@@ -28,26 +28,14 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
           
-      - name: 📦 Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pygbag  # Explicitly install pygbag
-          
-      - name: 📦 Cache Pygbag build
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: ${{ needs.setup.outputs.cache-key }}
-          
-      - name: 🏗️ Optimized build
+      - name: 📦 Install pygbag
+        run: pip install pygbag==0.9.2  # Specific version
+        
+      - name: 🏗️ Build web version
         run: |
           python -m pygbag \
             --build \
             --template noctx.tmpl \
-            --compress \
-            --no-splash \
-            --cdn http://localhost:8000 \
             main.py
 
   deploy:
@@ -66,4 +54,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
-          cname: imed-creates.github.io
