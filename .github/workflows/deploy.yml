@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Build"]
+    branches: [main]
+    types: [completed]
 
 jobs:
   deploy:
@@ -11,6 +13,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: build-artifact
+          path: build/web
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
