@@ -7,11 +7,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Build game
+        run: |
           mkdir -p build/web
-          echo "<h1>MonkeyClash Game</h1>" > build/web/index.html
+          # Convert Python game to web format (adjust as needed)
+          echo '<!DOCTYPE html>
+          <html>
+          <head>
+            <title>MonkeyClash</title>
+          </head>
+          <body>
+            <h1>MonkeyClash</h1>
+            <div id="game"></div>
+            <script src="game.js"></script>
+          </body>
+          </html>' > build/web/index.html
+          # Add your actual game files here
+          cp monkeys.py build/web/
+          cp cards.py build/web/
       - uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: build/web
-          retention-days: 5
+          retention-days: 1
