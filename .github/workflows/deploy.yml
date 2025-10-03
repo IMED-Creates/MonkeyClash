@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Build"]
+    workflows: ["Build Package"]
     branches: [main]
     types: [completed]
 
@@ -12,10 +12,11 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: build-artifact
-          path: build/web
-      - name: Deploy to GH Pages
-        uses: peaceiris/actions-gh-pages@v3
+          name: monkeyclash-deploy
+          path: monkeyclash-deploy/
+      - run: ls -la monkeyclash-deploy/  # Verify files exist
+      - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          publish_dir: ./monkeyclash-deploy
+          cname: IMED-Creates.github.io

@@ -1,4 +1,4 @@
-name: Build
+name: Build Package
 
 on: [push]
 
@@ -8,15 +8,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          mkdir -p dist
+          mkdir -p monkeyclash-deploy
           echo '<!DOCTYPE html>
           <html>
+          <head>
+            <title>MonkeyClash</title>
+          </head>
           <body>
-            <h1>MonkeyClash</h1>
+            <h1>MonkeyClash is Ready!</h1>
           </body>
-          </html>' > dist/index.html
+          </html>' > monkeyclash-deploy/index.html
       - uses: actions/upload-artifact@v4
         with:
-          name: monkeyclash-dist
-          path: dist/
-          retention-days: 3
+          name: monkeyclash-deploy
+          path: monkeyclash-deploy/
+          retention-days: 7
