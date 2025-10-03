@@ -18,3 +18,5 @@ A tower defense game built with Pygame, playable in browser via Pygbag.
 ## Controls
 - Left click: Select/place towers
 - Right click: Cancel selection
+
+<!-- Deployment update -->
