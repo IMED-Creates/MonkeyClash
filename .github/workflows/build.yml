@@ -17,8 +17,7 @@ jobs:
           pip install -r requirements.txt
       - name: Build game
         run: |
-          mkdir -p build/web
-          # Convert Python game to web format (adjust as needed)
+          mkdir -p dist
           echo '<!DOCTYPE html>
           <html>
           <head>
@@ -27,14 +26,12 @@ jobs:
           <body>
             <h1>MonkeyClash</h1>
             <div id="game"></div>
-            <script src="game.js"></script>
           </body>
-          </html>' > build/web/index.html
-          # Add your actual game files here
-          cp monkeys.py build/web/
-          cp cards.py build/web/
+          </html>' > dist/index.html
+          # Add your game files
+          cp *.py dist/
       - uses: actions/upload-artifact@v4
         with:
-          name: build-artifact
-          path: build/web
+          name: game-dist
+          path: dist/
           retention-days: 1
