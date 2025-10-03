@@ -22,3 +22,5 @@ A tower defense game built with Pygame, playable in browser via Pygbag.
 <!-- Deployment update -->
 
 <!-- Improved workflow -->
+
+<!-- Triggering rebuild -->
