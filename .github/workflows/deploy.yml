@@ -1,55 +1,17 @@
-name: ⚡ Turbo Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      cache-key: ${{ steps.cache.outputs.cache-key }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: 🧰 Generate cache key
-        id: cache
-        run: echo "cache-key=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-
-  build:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: 🐍 Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-          
-      - name: 📦 Install pygbag
-        run: pip install pygbag==0.9.2  # Specific version
-        
-      - name: 🏗️ Build web version
-        run: |
-          python -m pygbag \
-            --build \
-            --template noctx.tmpl \
-            main.py
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: build-artifact
-      - name: 🚀 Deploy
+      - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
